@@ -13,9 +13,6 @@ Clicking the extension button will focus the existing Google Music tab or open o
 Please reload the existing Google Music table after installation if any.
 
 
-This extension is open source. Dual licensed under MIT and Apache 2.0 licenses.
-Source code: https://github.com/asafh/chrome-gmusic-keys
-
 ## License
 Code is dual licensed under [MIT](http://opensource.org/licenses/MIT) and [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0) licenses
 Icon taken from http://findicons.com/icon/158580/folder_music?id=158906
