@@ -1,4 +1,4 @@
-chrome-gmusic-keys
+Google Music Keys
 =================
 
 A chrome extension that lets you bind hotkeys for Google Music actions (Toggle Play, Shuffle All, Next and previous)
