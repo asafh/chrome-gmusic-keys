@@ -1,7 +1,20 @@
 Google Music Keys
 =================
 
-A chrome extension that lets you bind hotkeys for Google Music actions (Toggle Play, Shuffle All, Next and previous)
+Music Keys is a Chrome extension that lets you bind hotkeys for Google Music actions.  
+Default Commands:  
+* Next Track: Ctrl+Shift+X  
+* Previous Track: Ctrl+Shift+Z  
+* Toggle Playback: Ctrl+Shift+A  
+* Shuffle All: Ctrl+Shift+S  
+
+Clicking the extension button will focus the existing Google Music tab or open one if none.
+
+Please reload the existing Google Music table after installation if any.
+
+
+This extension is open source. Dual licensed under MIT and Apache 2.0 licenses.
+Source code: https://github.com/asafh/chrome-gmusic-keys
 
 ## License
 Code is dual licensed under [MIT](http://opensource.org/licenses/MIT) and [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0) licenses
