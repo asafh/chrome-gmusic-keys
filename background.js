@@ -16,6 +16,12 @@ var MusicPlayer = {
 		}
 	}
 };
+chrome.tabs.onRemoved.addListener(function(tabId) {
+	var mp = MusicPlayer; //Not assuming this method is bound..
+	if(mp.tab && mp.tab.id == tabId) {
+		mp.tab = null;
+	}
+});
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
   	MusicPlayer.tab = sender.tab;
