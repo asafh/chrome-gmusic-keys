@@ -1,30 +1,41 @@
 var MusicPlayer = {
-	tab: null,
+	tabs: [],
+	tabLoaded: function(tab) {
+		this.tabs.push(tab);
+	},
+	getTab: function() {
+		return this.tabs.length ? this.tabs[0] : null;
+	},
+	removeTab: function(tabId) {
+		this.tabs = this.tabs.filter(function(tab) {
+			return tab.id !== tabId;
+		});
+	},
 	sendCommand: function(command) {
-		if(this.tab) {
-			chrome.tabs.sendMessage(this.tab.id, command);
+		var tab = this.getTab();
+		if(tab) {
+			chrome.tabs.sendMessage(tab.id, command);
 		}
 	},
 	focus: function() {
-		if(this.tab) {
-			chrome.tabs.update(this.tab.id, {active: true});
+		var tab = this.getTab();
+		if(tab) {
+			chrome.tabs.update(tab.id, {active: true});
 		}
 		else {
-			chrome.tabs.create({url: "https://play.google.com/music/listen"}, function(tab) {
-				MusicPlayer.tab = tab;
-			});
+			chrome.tabs.create({url: "https://play.google.com/music/listen"});
+			// , function(tab) {
+				// MusicPlayer.tab = tab;
+			// }
 		}
 	}
 };
-chrome.tabs.onRemoved.addListener(function(tabId) {
-	var mp = MusicPlayer; //Not assuming this method is bound..
-	if(mp.tab && mp.tab.id == tabId) {
-		mp.tab = null;
-	}
-});
+chrome.tabs.onRemoved.addListener(MusicPlayer.removeTab.bind(MusicPlayer));
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-  	MusicPlayer.tab = sender.tab;
+  	if(sender.tab) {
+  		MusicPlayer.tabLoaded(sender.tab);
+  	}
 });
 
 chrome.browserAction.onClicked.addListener(function() {
