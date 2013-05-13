@@ -1,8 +1,5 @@
 var MusicPlayer = {
 	tabs: [],
-	tabLoaded: function(tab) {
-		this.tabs.push(tab);
-	},
 	getTab: function() {
 		return this.tabs.length ? this.tabs[0] : null;
 	},
@@ -11,11 +8,32 @@ var MusicPlayer = {
 			return tab.id !== tabId;
 		});
 	},
+	queryTabs: function(tabId, info, tab) {
+		var me = this;
+		chrome.tabs.query({"url":"https://play.google.com/music/*"}, function(tabs) {
+			me.tabs = tabs;
+		});
+	},
 	sendCommand: function(command) {
 		var tab = this.getTab();
 		if(tab) {
-			chrome.tabs.sendMessage(tab.id, command);
+			var ok = false;
+			function die() {
+				if(!ok) {
+					chrome.tabs.remove(tab.id);
+					MusicPlayer.sendCommand(command); //Retry
+				}
+			}
+			setTimeout(die, 150);
+			chrome.tabs.sendMessage(tab.id, command, function(resp) {
+				ok = resp;
+			});
+		} else {
+			this.createMusicTab();
 		}
+	},
+	createMusicTab: function() {
+		chrome.tabs.create({url: "https://play.google.com/music/listen"});
 	},
 	focus: function() {
 		var tab = this.getTab();
@@ -23,23 +41,15 @@ var MusicPlayer = {
 			chrome.tabs.update(tab.id, {active: true});
 		}
 		else {
-			chrome.tabs.create({url: "https://play.google.com/music/listen"});
-			// , function(tab) {
-				// MusicPlayer.tab = tab;
-			// }
+			this.createMusicTab();
 		}
 	}
 };
 chrome.tabs.onRemoved.addListener(MusicPlayer.removeTab.bind(MusicPlayer));
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	if(sender.tab) {
-  		MusicPlayer.tabLoaded(sender.tab);
-  	}
-});
+chrome.tabs.onUpdated.addListener(MusicPlayer.queryTabs.bind(MusicPlayer));
 
 chrome.browserAction.onClicked.addListener(function() {
-	MusicPlayer.focus();
+	 MusicPlayer.focus();
 });
 chrome.commands.onCommand.addListener(function(cmd) {
 	cmd = cmd.substr("cmd-".length);

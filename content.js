@@ -1,4 +1,4 @@
-chrome.runtime.sendMessage(true); //Notify of new tab, true is an arbitrary value
+// chrome.runtime.sendMessage(true); //Notify of new tab, true is an arbitrary value
 
 function fireSJBEvent(name) {
 	var script = document.createElement("script");
@@ -30,9 +30,8 @@ var COMMANDS = {
 		fireSJBEvent('prevSong')
 	}
 }
-chrome.runtime.onMessage.addListener(
-  function(command, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(command, sender, sendResponse) {
+    sendResponse(true);
     var cmd = COMMANDS[command.name];
     cmd.apply(cmd,command.args);
-  }
-);
+  });

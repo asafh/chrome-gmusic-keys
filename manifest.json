@@ -13,7 +13,8 @@
     }
   ],
   "permissions":  [
-    "https://play.google.com/music/listen"
+    "https://play.google.com/music/listen",
+    "tabs"
   ],
   "icons": { 
           "128": "folder_music.png" },
