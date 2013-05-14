@@ -39,6 +39,7 @@ var MusicPlayer = {
 		var tab = this.getTab();
 		if(tab) {
 			chrome.tabs.update(tab.id, {active: true});
+			chrome.windows.update(tab.windowId, {focused: true});
 		}
 		else {
 			this.createMusicTab();
@@ -55,3 +56,5 @@ chrome.commands.onCommand.addListener(function(cmd) {
 	cmd = cmd.substr("cmd-".length);
 	MusicPlayer.sendCommand({name:cmd});
 });
+
+MusicPlayer.queryTabs();
