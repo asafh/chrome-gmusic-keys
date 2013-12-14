@@ -1,6 +1,6 @@
 {
   "name": "Music Keys",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Allows you to bind hotkeys for Google Music player",
   "background": {
     "scripts": ["background.js"]
