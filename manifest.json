@@ -31,12 +31,6 @@
       },
       "description": "Toggle playback"
     },
-    "cmd-shuffleAll": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+S"
-      },
-      "description": "Shuffle All"
-    },
     "cmd-next": {
       "suggested_key": {
         "default": "Ctrl+Shift+X"
@@ -48,6 +42,12 @@
         "default": "Ctrl+Shift+Z"
       },
       "description": "Previous track"
+    },
+    "cmd-shuffle": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Shuffle on/off"
     }
   }
 }
